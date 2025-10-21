@@ -95,6 +95,11 @@ void GameManager::loseLife()
     // TODO screen shake.
 }
 
+void GameManager::levelComplete()
+{
+    _levelComplete = true;
+}
+
 void GameManager::render()
 {
     _paddle->render();
@@ -103,11 +108,6 @@ void GameManager::render()
     _powerupManager->render();
     _window->draw(_masterText);
     _ui->render();
-}
-
-void GameManager::levelComplete()
-{
-    _levelComplete = true;
 }
 
 sf::RenderWindow* GameManager::getWindow() const { return _window; }

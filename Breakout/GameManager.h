@@ -8,15 +8,14 @@
 #include "MessagingSystem.h"
 #include "UI.h"
 
-
-
 class GameManager {
 public:
     GameManager(sf::RenderWindow* window);
     void initialize();
     void update(float dt);
-    void loseLife();
     void render();
+
+    void loseLife();
     void levelComplete();
     void powerupEffect(POWERUPS pu, float t);
 
@@ -25,7 +24,6 @@ public:
     PowerupManager* getPowerupManager() const;
     sf::RenderWindow* getWindow() const;
     UI* getUI() const;
-
 
 private:
     bool _pause;
