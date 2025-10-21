@@ -28,6 +28,10 @@ void GameManager::initialize()
 
     // Create bricks
     _brickManager->createBricks(5, 10, 80.0f, 30.0f, 5.0f);
+
+    // Preload sfx
+    _soundManager->preloadSoundEffect("audio/sfx/death.wav");
+    _soundManager->preloadSoundEffect("audio/sfx/pause.wav");
 }
 
 void GameManager::update(float dt)
@@ -35,7 +39,6 @@ void GameManager::update(float dt)
     _powerupInEffect = _powerupManager->getPowerupInEffect();
     _ui->updatePowerupText(_powerupInEffect);
     _powerupInEffect.second -= dt;
-    
 
     if (_lives <= 0)
     {
@@ -53,12 +56,16 @@ void GameManager::update(float dt)
     {
         if (!_pause && _pauseHold <= 0.f)
         {
+            _soundManager->playSound("audio/sfx/pause.wav", 1.f, 1.f, SoundCategory::UI);
+            _soundManager->pauseCategory(SoundCategory::Gameplay);
             _pause = true;
             _masterText.setString("paused.");
             _pauseHold = PAUSE_TIME_BUFFER;
         }
         if (_pause && _pauseHold <= 0.f)
         {
+            _soundManager->playSound("audio/sfx/pause.wav", 0.5f, 1.f, SoundCategory::UI);
+            _soundManager->unpauseCategory(SoundCategory::Gameplay);
             _pause = false;
             _masterText.setString("");
             _pauseHold = PAUSE_TIME_BUFFER;
@@ -93,6 +100,8 @@ void GameManager::loseLife()
 {
     _lives--;
     _ui->lifeLost(_lives);
+
+    _soundManager->playSound("audio/sfx/death.wav", 1.5f, 0.8f);
 
     // TODO screen shake.
 }

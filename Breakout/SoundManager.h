@@ -19,6 +19,9 @@ public:
 	float getVolume(SoundCategory);
 	void setVolume(SoundCategory, float);
 
+	void pauseCategory(SoundCategory);
+	void unpauseCategory(SoundCategory);
+
 private:
 	sf::SoundBuffer* getBuffer(std::string path);
 	std::map<std::string, sf::SoundBuffer> _soundBufferCache;

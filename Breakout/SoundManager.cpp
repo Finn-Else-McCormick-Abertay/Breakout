@@ -20,6 +20,16 @@ void SoundManager::setVolume(SoundCategory category, float volume) {
 	}
 }
 
+void SoundManager::pauseCategory(SoundCategory category) {
+	for (auto& sound : _activeSounds.at(category)) { sound.pause(); }
+}
+
+void SoundManager::unpauseCategory(SoundCategory category) {
+	for (auto& sound : _activeSounds.at(category)) {
+		if (sound.getStatus() == sf::Sound::Status::Paused) sound.play();
+	}
+}
+
 bool SoundManager::preloadSoundEffect(std::string path) { return getBuffer(path) != nullptr; }
 
 sf::SoundBuffer* SoundManager::getBuffer(std::string path) {
