@@ -5,10 +5,6 @@
 #include "Paddle.h"
 #include "Ball.h"
 #include <vector>
-
-#include "PowerupFireBall.h"
-
-
 class PowerupBase
 {
 public:
@@ -41,5 +37,4 @@ protected: // Protected so derived classes can access these members
     sf::CircleShape _sprite;
     sf::Color _colour;
     sf::RenderWindow* _window;
-
 };
