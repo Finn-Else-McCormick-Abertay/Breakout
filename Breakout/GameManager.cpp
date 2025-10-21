@@ -17,12 +17,14 @@ GameManager::GameManager(sf::RenderWindow* window)
 
 void GameManager::initialize()
 {
-    _paddle = new Paddle(_window);
-    _brickManager = new BrickManager(_window, this);
-    _messagingSystem = new MessagingSystem(_window);
-    _ball = new Ball(_window, 400.0f, this); 
-    _powerupManager = new PowerupManager(_window, _paddle, _ball);
-    _ui = new UI(_window, _lives, this);
+    _brickManager = std::make_unique<BrickManager>(_window, this);
+    _soundManager = std::make_unique<SoundManager>();
+    _messagingSystem = std::make_unique<MessagingSystem>(_window);
+
+    _paddle = std::make_unique<Paddle>(_window);
+    _ball = std::make_unique<Ball>(_window, 400.0f, this);
+    _powerupManager = std::make_unique<PowerupManager>(_window, _paddle.get(), _ball.get());
+    _ui = std::make_unique<UI>(_window, _lives, this);
 
     // Create bricks
     _brickManager->createBricks(5, 10, 80.0f, 30.0f, 5.0f);
@@ -111,7 +113,8 @@ void GameManager::render()
 }
 
 sf::RenderWindow* GameManager::getWindow() const { return _window; }
-UI* GameManager::getUI() const { return _ui; }
-Paddle* GameManager::getPaddle() const { return _paddle; }
-BrickManager* GameManager::getBrickManager() const { return _brickManager; }
-PowerupManager* GameManager::getPowerupManager() const { return _powerupManager; }
+UI* GameManager::getUI() const { return _ui.get(); }
+Paddle* GameManager::getPaddle() const { return _paddle.get(); }
+BrickManager* GameManager::getBrickManager() const { return _brickManager.get(); }
+PowerupManager* GameManager::getPowerupManager() const { return _powerupManager.get(); }
+SoundManager* GameManager::getSoundManager() const { return _soundManager.get(); }

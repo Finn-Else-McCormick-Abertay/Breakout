@@ -10,9 +10,7 @@ Ball::Ball(sf::RenderWindow* window, float velocity, GameManager* gameManager)
     _sprite.setFillColor(sf::Color::Cyan);
     _sprite.setPosition(0, 300);
 
-    _bounceSFXBuffer = std::make_unique<sf::SoundBuffer>();
-    if (!_bounceSFXBuffer->loadFromFile("audio/sfx/bounce.wav")) _bounceSFXBuffer = nullptr;
-    else { for (auto& sound : _bounceSounds) { sound.setBuffer(*_bounceSFXBuffer); } }
+    _gameManager->getSoundManager()->preloadSoundEffect("audio/sfx/bounce.wav");
 }
 
 void Ball::update(float dt)
@@ -120,20 +118,11 @@ void Ball::setFireBall(float duration)
 
 
 void Ball::onBounced(BounceType type) {
-    if (!_bounceSFXBuffer) return;
-
     if (type == BounceType::PADDLE || type == BounceType::DEATHPLANE) _bouncesSinceHitPaddle = 0;
     else _bouncesSinceHitPaddle++;
 
-    // Keep a buffer of multiple sound objects, so sound effects are not noticeably cut short when there are multiple bounces in quick succession
-    sf::Sound* soundToUse = nullptr;
-    for (auto& sound : _bounceSounds) {
-        // If there is a stopped sound, use that
-        if (sound.getStatus() != sf::Sound::Status::Playing) { soundToUse = &sound; break; }
-        // Else get the sound with the longest elapsed time
-        if (!soundToUse || (sound.getPlayingOffset() > soundToUse->getPlayingOffset())) soundToUse = &sound;
-    }
+    if (type == BounceType::DEATHPLANE) return;
 
     float pitch = 1.f + _bouncesSinceHitPaddle * 0.01f;
-    if (soundToUse) { soundToUse->setPitch(pitch); soundToUse->play(); }
+    _gameManager->getSoundManager()->playSound("audio/sfx/bounce.wav", pitch, 1.f, SoundCategory::Gameplay);
 }

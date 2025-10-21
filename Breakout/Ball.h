@@ -20,9 +20,6 @@ private:
 	sf::Vector2f _direction;
 	sf::RenderWindow* _window;
 
-	std::unique_ptr<sf::SoundBuffer> _bounceSFXBuffer;
-	std::array<sf::Sound, 5> _bounceSounds = {};
-
 	enum class BounceType { WALL, CEILING, BRICKS, PADDLE, DEATHPLANE };
 	void onBounced(BounceType);
 	int _bouncesSinceHitPaddle = 0;
