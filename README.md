@@ -32,4 +32,10 @@ fire ball (green)
 * Implement commentary with calls to an LLM such as LLama
 
 # Time Details and Changelist
-<Add information to this section about the time you've taken for this task along with a professional changelist.>
+- Fixed compiler errors (10 mins)
+- Implemented bounce SFX, including rising pitch for each hit (resetting when the ball hits the paddle again) and a fixed array-based queue to prevent each sound effect from overwriting the previous one, while keeping memory consumption low. (~1 hr)
+- Refactored this sound effect implementation into a more generic and flexible Sound Manager. (45 mins)
+- Used this system to implement death and pausing sound effects, extended it to allow gameplay sounds to be paused during the pause screen (30 mins)
+
+
+

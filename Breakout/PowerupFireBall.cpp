@@ -9,16 +9,6 @@ PowerupFireBall::PowerupFireBall(sf::RenderWindow* window, Paddle* paddle, Ball*
 
 PowerupFireBall::~PowerupFireBall()
 {
-
-    int* pInteger = new int();
-
-    if (pInteger != nullptr)
-    {
-        // use my pointer to do things.
-    }
-
-
-    
 }
 
 std::pair<POWERUPS, float> PowerupFireBall::applyEffect()
